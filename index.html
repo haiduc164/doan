@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StoreMáy - Bán máy tính</title>
+  <style>
+    /* Reset & cơ bản */
+    *{ box-sizing:border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f8f8f8;
+      color:#222;
+    }
+
+    /* Top bar (nhỏ) */
+    .top-bar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:6px 30px;
+      background:#f7f7f7;
+      font-size:13px;
+      color:#b21a1a;
+    }
+    .top-left { display:flex; gap:18px; align-items:center; }
+    .top-left span { white-space:nowrap; }
+    .cart-btn{ background:#ff6f61; color:#fff; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-weight:700; }
+
+    /* Brand row: logo + search + actions */
+    .brand-row{ display:flex; align-items:center; justify-content:flex-start; padding:16px 30px; gap:20px;
+      padding:16px 30px;
+      gap:20px;
+    }
+    .logo{ font-size:28px; font-weight:800; }
+    .right-actions{ display:flex; align-items:center; gap:10px; }
+    .btn{ background:#E53935; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:700; }
+    .btn:hover{ opacity:0.9; }
+    .right-actions
+    .search-input{ padding:8px 10px; border-radius:6px; border:1px solid #ddd; }
+
+    .main-menu{ display:flex; gap:16px; padding:10px 30px; background:#E53935; color:#fff; align-items:center; justify-content:center; }
+    .main-menu a{ color:#fff; font-weight:700; text-decoration:none; white-space:nowrap; padding:6px 4px; }
+    .main-menu a:hover{ opacity:0.9; }
+
+    .banner-slider {
+      width: 100%;
+      max-width: 1200px;
+      margin: 20px auto;
+      overflow: hidden;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .slides img { width:100%; height:400px; object-fit:cover; display:block; }
+
+    @keyframes slide {
+      0% {transform:translateX(0);} 
+      33% {transform:translateX(-100%);} 
+      66% {transform:translateX(-200%);} 
+      100% {transform:translateX(0);} 
+    }
+
+    main {
+      min-height: calc(100vh - 220px);
+      max-width:1100px;
+      margin: 0 auto;
+      padding:20px;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:20px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      transition: 0.2s;
+    }
+    .product-card img { width:100%; height:170px; object-fit:cover; border-radius:6px; }
+    .product-title { font-size:18px; font-weight:bold; margin:8px 0; }
+    .price { color:#e91e63; font-weight:bold; margin-bottom:10px; font-size:17px; }
+    .btn-add { background:#2a7; color:white; padding:10px; border-radius:8px; width:100%; border:none; font-weight:bold; cursor:pointer; }
+
+    footer { text-align:center; padding:15px; background:white; margin-top:30px; border-top:1px solid #ddd; }
+
+    /* Responsive tweaks */
+    @media (max-width:900px){
+      .products{ grid-template-columns: repeat(2, 1fr); }
+      .top-left{ flex-direction:column; align-items:flex-start; gap:6px; }
+      .brand-row{ flex-wrap:wrap; gap:10px; padding:12px; }
+      .logo{ font-size:22px; }
+      .right-actions{ width:100%; justify-content:flex-end; }
+      .search-input{ width:100%; max-width:420px; }
+    }
+    @media (max-width:600px){
+      .products{ grid-template-columns: repeat(1, 1fr); }
+      .brand-row{ flex-direction:column; align-items:flex-start; }
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      font-size: 28px;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .arrow:hover { background: rgba(0,0,0,0.7); }
+
+  </style>
+</head>
+<body>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  let index = 0;
+  const slides = document.querySelector(".slides");
+  const images = document.querySelectorAll(".slides img");
+  const total = images.length || 1;
+  function showSlide(i) {
+    index = (i + total) % total;
+    if (slides) slides.style.transform = `translateX(-${index * 100}%)`;
+  }
+  const left = document.querySelector(".arrow.left");
+  const right = document.querySelector(".arrow.right");
+  if (left) left.addEventListener('click', ()=> showSlide(index - 1));
+  if (right) right.addEventListener('click', ()=> showSlide(index + 1));
+  // auto slide every 5s
+  setInterval(()=> showSlide(index + 1), 5000);
+});
+</script>
+
+  <!-- HEADER: thay thế -->
+  <header>
+    <div class="top-bar">
+      <div class="top-left">
+        <span class="support">💬 Hỗ trợ khách hàng</span>
+        <span class="hotline">📞 Hotline: <b>0123 456 789</b></span>
+        <button class="cart-btn" aria-label="Giỏ hàng">🛒 Giỏ hàng</button></div>
+      <div class="top-right"></div>
+    </div>
+
+    <div class="brand-row">
+      <div class="brand-left"></div>
+
+      <div class="logo" style="margin-right:auto;">LaptopStore.vn</div>
+
+      <div class="right-actions">
+        <input class="search-input" type="text" placeholder="Tìm kiếm laptop...">
+        <button class="btn btn-login">Đăng nhập</button>
+        <button class="btn btn-signup">Đăng ký</button></div>
+    </div>
+
+    <nav class="main-menu" role="navigation" aria-label="Main menu">
+      <a href="#">Flash sale</a>
+      <a href="#">Laptop Gaming</a>
+      <a href="#">Đồ họa</a>
+      <a href="#">Văn phòng</a>
+      <a href="#">Phụ kiện</a>
+      <a href="#">Laptop cũ</a>
+    </nav>
+  </header>
+
+  <!-- Banner slider -->
+<div class="banner-slider">
+  <button class="arrow left">&#10094;</button>
+
+  <div class="slides">
+    <img src="https://picsum.photos/1200/400?random=1">
+    <img src="https://picsum.photos/1200/400?random=2">
+    <img src="https://picsum.photos/1200/400?random=3">
+  </div>
+
+  <button class="arrow right">&#10095;</button></div>
+
+<!-- Danh mục sản phẩm -->
+<section class="categories" style="max-width:1100px;margin:20px auto;padding:0 20px;">
+  <h2 style="font-size:24px;font-weight:800;margin-bottom:15px;">Danh mục sản phẩm</h2>
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;align-items:stretch;">
+    <a class="cat-card" href="#" style="display:block;border:1px solid #eee;padding:18px;border-radius:10px;text-decoration:none;color:inherit;">💻<div style="margin-top:8px;font-weight:700;">Laptop Gaming</div></a>
+    <a class="cat-card" href="#" style="display:block;border:1px solid #eee;padding:18px;border-radius:10px;text-decoration:none;color:inherit;">🖥️<div style="margin-top:8px;font-weight:700;">Laptop Văn phòng</div></a>
+    <a class="cat-card" href="#" style="display:block;border:1px solid #eee;padding:18px;border-radius:10px;text-decoration:none;color:inherit;">🎨<div style="margin-top:8px;font-weight:700;">Laptop Đồ họa</div></a>
+    <a class="cat-card" href="#" style="display:block;border:1px solid #eee;padding:18px;border-radius:10px;text-decoration:none;color:inherit;">🔌<div style="margin-top:8px;font-weight:700;">Phụ kiện</div></a>
+    <a class="cat-card" href="#" style="display:block;border:1px solid #eee;padding:18px;border-radius:10px;text-decoration:none;color:inherit;">♻️<div style="margin-top:8px;font-weight:700;">Laptop Cũ</div></a>
+    <a class="cat-card" href="#" style="display:block;border:1px solid #eee;padding:18px;border-radius:10px;text-decoration:none;color:inherit;">⚡<div style="margin-top:8px;font-weight:700;">Flash Sale</div></a>
+  </div>
+</section>
+
+  <main>
+    <section class="products">
+      <div class="product-card" onclick="location.href='product.php?id=1'" style="cursor:pointer;">
+        <img src="https://picsum.photos/seed/l1/400/300" alt="Laptop Pro 15">
+        <div class="product-title">Laptop Pro 15</div>
+        <div class="price">23.990.000 ₫</div>
+        <button class="btn-add">Thêm vào giỏ</button></div>
+
+      <div class="product-card" onclick="location.href='product.php?id=2'" style="cursor:pointer;">
+        <img src="https://picsum.photos/seed/l2/400/300" alt="Gaming X">
+        <div class="product-title">Gaming X</div>
+        <div class="price">34.990.000 ₫</div>
+        <button class="btn-add">Thêm vào giỏ</button></div>
+
+      <div class="product-card" onclick="location.href='product.php?id=3'" style="cursor:pointer;">
+        <img src="https://picsum.photos/seed/l3/400/300" alt="Ultrabook Air">
+        <div class="product-title">Ultrabook Air</div>
+        <div class="price">19.990.000 ₫</div>
+        <button class="btn-add">Thêm vào giỏ</button></div>
+
+      <div class="product-card" onclick="location.href='product.php?id=4'" style="cursor:pointer;">
+        <img src="https://picsum.photos/seed/l4/400/300" alt="Workstation 15">
+        <div class="product-title">Workstation 15</div>
+        <div class="price">45.990.000 ₫</div>
+        <button class="btn-add">Thêm vào giỏ</button></div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 StoreMáy - Demo HTML & CSS
+  </footer>
+<script>
+// Ngăn nút Thêm vào giỏ chuyển trang
+const addBtns = document.querySelectorAll('.btn-add');
+addBtns.forEach(btn => {
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    alert('✅ Sản phẩm đã thêm vào giỏ! (demo)');
+  });
+});
+</script>
+</body>
+</html>
